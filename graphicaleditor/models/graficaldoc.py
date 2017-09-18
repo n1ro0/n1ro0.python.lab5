@@ -21,6 +21,7 @@ class GraficalDoc(object):
         pass
 
     def add(self, figure):
-        pass
+        self.figures.append(figure)
+        figure.draw()
 
 
