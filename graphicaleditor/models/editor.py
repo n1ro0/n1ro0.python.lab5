@@ -1,11 +1,23 @@
 #ILYA CHABAN
 from graphicaleditor.models.graficaldoc import GraficalDoc
-from graphicaleditor.models.consolecommandreader import ConsoleCommandReader
 from graphicaleditor.drawmodels.Line import Line
 from graphicaleditor.drawmodels.Triangle import Triangle
+from graphicaleditor.models.consolecommandreader import CommandNode
+import json
+import pickle
 
 
-
+class EditorCommandTree(object):
+    def __init__(self):
+        root_children = []
+        self.root = CommandNode("root", (), None, root_children)
+        root_children.append(CommandNode("create", (), self.root, []))
+        root_children.append(CommandNode("save", ("filename",), self.root, []))
+        add_children = []
+        add_node = CommandNode("add", (), self.root, add_children)
+        root_children.append(add_node)
+        add_children.append(CommandNode("line", ("point1_x", "point1_y", "point2_x", "point2_y"), add_node, []))
+        add_children.append(CommandNode("triangle", ("point1_x", "point1_y", "point2_x", "point2_y", "point3_x", "point3_y"), add_node, []))
 
 
 class Editor(object):
@@ -13,6 +25,7 @@ class Editor(object):
         self.drawer = drawer
         self.graf_doc = graf_doc
         self.input_reader = input_reader
+        self.register_save_methods()
 
     @property
     def drawer(self):
@@ -46,11 +59,26 @@ class Editor(object):
     def save_options(self, value):
         self._save_options = value
 
+    def json_save_method(self, filename, data):
+        with open(filename, "w") as f:
+            json_data = json.dumps(data)
+            f.write(json_data)
+
+    def pickle_save_method(self, filename, data):
+        with open(filename, "wb") as f:
+            pickle_data = pickle.dumps(data)
+            f.write(pickle_data)
+
+    def register_save_methods(self):
+        self.save_options = {}
+        self.save_options["json"] = self.json_save_method
+        self.save_options["pickle"] = self.pickle_save_method
+
     def exec_command(self, command_list):
         if command_list[0] == "create":
             self.graf_doc = GraficalDoc()
         elif command_list[0] == "save":
-            pass#self.graf_doc.save(command_list[1], save_options[command_list[0]])
+            self.graf_doc.save(command_list[1], self.save_options[command_list[1].split(".")[1]])
         elif command_list[0] == "add":
             if command_list[1] == "line":
                 figure = Line(self.drawer, (int(command_list[2]), int(command_list[3])),

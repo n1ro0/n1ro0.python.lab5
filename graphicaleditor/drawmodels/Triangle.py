@@ -115,3 +115,11 @@ class Triangle(GeometricFigure):
         Line(self.turtle, points[1], points[2]).draw()
         Line(self.turtle, points[2], points[0]).draw()
         self.turtle.end_fill()
+
+    def to_dict(self):
+        line_as_dict = {"type": "Triangle",
+                        "data": {"point1": self.point1,
+                                 "point2": self.point2,
+                                 "point3": self.point3,
+                                 "fillcolor": self.fill_color}}
+        return line_as_dict

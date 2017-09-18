@@ -68,3 +68,10 @@ class Line(GeometricFigure):
         #second and shorter option
         #t.setposition(point1)
         #t.goto(point2)
+
+    def to_dict(self):
+        line_as_dict = {"type": "Line",
+                        "data": {"point1": self.point1,
+                                 "point2": self.point2,
+                                 "color": self.color}}
+        return line_as_dict

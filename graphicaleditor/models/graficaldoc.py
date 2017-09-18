@@ -17,8 +17,9 @@ class GraficalDoc(object):
     def open(self, filename):
         pass
 
-    def save(self, filename):
-        pass
+    def save(self, filename, save_method):
+        data = [figure.to_dict() for figure in self.figures]
+        save_method(filename, data)
 
     def add(self, figure):
         self.figures.append(figure)

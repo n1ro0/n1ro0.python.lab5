@@ -1,0 +1,1 @@
+[{"type": "Line", "data": {"point1": [1, 1], "point2": [44, 44], "color": "black"}}, {"type": "Triangle", "data": {"point1": [33, 55], "point2": [2, 3], "point3": [66, 43], "fillcolor": "black"}}]
