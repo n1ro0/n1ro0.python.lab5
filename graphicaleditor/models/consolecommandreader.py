@@ -1,4 +1,17 @@
-class ConsoleCommandReader:
+#ILYA CHABAN
+class CommandNode(object):
+    def __init__(self, name, params, root, children):
+        self.name = name
+        self.params = params
+        self.root = root
+        self.children = children
+
+class CommandTree(object):
+    def __init__(self):
+        root = CommandNode("root", (), None, )
+
+
+class ConsoleCommandReader(object):
 
     def __init__(self, start_node):
         self.start_node = start_node

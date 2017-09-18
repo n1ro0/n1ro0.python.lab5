@@ -1,15 +1,7 @@
+#ILYA CHABAN
 class GraficalDoc(object):
-    def __init__(self, drawer):
-        self.drawer = drawer
+    def __init__(self):
         self.figures = []
-
-    @property
-    def drawer(self):
-        return self._drawer
-
-    @drawer.setter
-    def drawer(self, value):
-        self._drawer = value
 
     @property
     def figures(self):
